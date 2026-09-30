@@ -1,2 +1,21 @@
 #Unity
-[Ll]ibrary/ [Tt]emp/ [Oo]bj/ [Bb]uild/ [Bb]uilds/ [Ll]ogs/ [Uu]serSettings/ *.csproj *.sln *.user *.pidb *.booproj *.svd *.pdb *.mdb *.opendb *.VC.db .vs/ .idea/
+[Ll]ibrary/ 
+[Tt]emp/ 
+[Oo]bj/ 
+[Bb]uild/ 
+[Bb]uilds/ 
+[Ll]ogs/ 
+[Uu]serSettings/ 
+*.csproj 
+!UI/Assets/UI.Dependencies.msb4u.csproj
+*.sln 
+*.user 
+*.pidb 
+*.booproj 
+*.svd 
+*.pdb 
+*.mdb 
+*.opendb 
+*.VC.db 
+.vs/ 
+.idea/
