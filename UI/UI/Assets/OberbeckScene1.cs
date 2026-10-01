@@ -366,9 +366,18 @@ public class OberbeckScene1 : MonoBehaviour
         if (!threadEnded)
         {
             _omega += alpha * dt;
-            _phi += _omega * dt;
             _threadUnwound += (float)(_omega * pulleyRadius * dt);
         }
+        else
+        {
+            // Инерция: диск крутится дальше, но замедляется трением
+            double frictionDecel = 0.5; // рад/с² — подбери на глаз
+            if (_omega > 0)
+                _omega = System.Math.Max(0, _omega - frictionDecel * dt);
+        }
+
+        _phi += _omega * dt;
+        _time += dt;
 
         _time += dt;
 
