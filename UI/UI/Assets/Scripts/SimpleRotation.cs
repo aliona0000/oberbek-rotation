@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+// Удалить.
 public class SimpleRotation : MonoBehaviour
 {
     [Header("Начальные условия")]

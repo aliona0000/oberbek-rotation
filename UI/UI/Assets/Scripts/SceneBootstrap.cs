@@ -1,5 +1,6 @@
 using UnityEngine;
 
+// Удалить.
 public class SceneBootstrap : MonoBehaviour
 {
     [Header("Настройки сцены")]
