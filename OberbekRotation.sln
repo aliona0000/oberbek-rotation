@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{59D752E3-C7A5-4444-A218-EF8EFAC6EAB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Export", "Export\Export.csproj", "{8951774D-BEEA-41E7-B42C-EFBDFD8249B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OberbekRotation.Tests", "Tests\OberbekRotation.Tests.csproj", "{9BEDE818-1897-4BED-B077-923ED8DE9911}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OberbekRotation.Example", "Examples\OberbekRotation.Example.csproj", "{695F22F0-08C0-4CAA-B836-A9C5FD0BB234}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59D752E3-C7A5-4444-A218-EF8EFAC6EAB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D752E3-C7A5-4444-A218-EF8EFAC6EAB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D752E3-C7A5-4444-A218-EF8EFAC6EAB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D752E3-C7A5-4444-A218-EF8EFAC6EAB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8951774D-BEEA-41E7-B42C-EFBDFD8249B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8951774D-BEEA-41E7-B42C-EFBDFD8249B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8951774D-BEEA-41E7-B42C-EFBDFD8249B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8951774D-BEEA-41E7-B42C-EFBDFD8249B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BEDE818-1897-4BED-B077-923ED8DE9911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BEDE818-1897-4BED-B077-923ED8DE9911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BEDE818-1897-4BED-B077-923ED8DE9911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BEDE818-1897-4BED-B077-923ED8DE9911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{695F22F0-08C0-4CAA-B836-A9C5FD0BB234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{695F22F0-08C0-4CAA-B836-A9C5FD0BB234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{695F22F0-08C0-4CAA-B836-A9C5FD0BB234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{695F22F0-08C0-4CAA-B836-A9C5FD0BB234}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
