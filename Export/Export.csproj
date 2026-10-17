@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AssemblyName>OberbekRotation.Export</AssemblyName>
+    <RootNamespace>OberbekRotation.Export</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageId>OberbekRotation.Export</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Oberbek Rotation contributors</Authors>
+    <Description>Versioned JSON experiments and invariant CSV data for OberbekRotation.</Description>
+    <RepositoryUrl>https://github.com/aliona0000/oberbek-rotation</RepositoryUrl>
+    <PackageReadmeFile>CORE-EXPORT.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Core/Core.csproj" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <None Include="../docs/CORE-EXPORT.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>
