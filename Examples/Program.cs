@@ -12,7 +12,7 @@ var configuration = new SimulationConfiguration(gravity: 9.81, timeStep: 0.01);
 var parameters = new OberbeckParameters(mass1: 0.200, mass2: 0.150, radius: 0.050, momentOfInertia: 0.010);
 var input = new SimulationRequest(parameters, endTime: 2, configuration: configuration);
 var result = new OberbeckSimulation().Run(input);
-var experiment = new Experiment("Обербек — пример из методички", input, result);
+var experiment = new Experiment("Обербек - пример из методички", input, result);
 string jsonPath = Path.Combine(outputDirectory, "oberbeck.json");
 ExperimentFile.Save(jsonPath, experiment);
 ExperimentFile.Save(Path.Combine(outputDirectory, "oberbeck.csv"), experiment);

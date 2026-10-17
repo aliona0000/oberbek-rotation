@@ -19,7 +19,7 @@ namespace OberbekRotation.Core
         public double Radius { get; }
         /// <summary>Известный момент инерции диска, кг·м².</summary>
         public double MomentOfInertia { get; }
-        /// <summary>Вычисляет (m1 − m2) g R; равные массы дают ноль, m1 &lt; m2 — отрицательный момент.</summary>
+        /// <summary>Вычисляет (m1 − m2) g R; равные массы дают ноль, m1 &lt; m2 - отрицательный момент.</summary>
         public double CalculateTorque(double gravity = SimulationConfiguration.StandardGravity)
         {
             Guard.Positive(gravity, nameof(gravity));

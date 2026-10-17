@@ -2,7 +2,7 @@ using System;
 
 namespace OberbekRotation.Core
 {
-    /// <summary>Классический явный метод Рунге–Кутта четвёртого порядка для гладких систем ОДУ.</summary>
+    /// <summary>Классический явный метод Рунге-Кутта четвёртого порядка для гладких систем ОДУ.</summary>
     public sealed class Rk4Solver
     {
         /// <summary>Выполняет один шаг RK4 и возвращает новый вектор; исходный массив не изменяется.</summary>
