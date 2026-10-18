@@ -156,6 +156,48 @@ CSV предназначен для таблиц и графиков. В нём 
 существующий файл; каталог должен существовать. Сериализация завершается до открытия
 файла, но сохранение не является атомарным при сбое диска или питания.
 
+## Описание модели и кадры сцены
+
+В `Core/Presentation` находятся три файла для связи модели с ViewModel:
+
+- `PresentationContracts.cs`: входные параметры, выходные величины, фигуры и кадры сцены.
+- `OberbeckModelDescriptor.cs`: значения по умолчанию, проверка диапазонов и запуск расчёта.
+- `OberbeckSession.cs`: получение кадров, ограничения хода грузов и доступ к данным для экспорта.
+
+Пример использования из ViewModel:
+
+```csharp
+IModelDescriptor descriptor = new OberbeckModelDescriptor();
+ISimulationSession session = descriptor.Start(new Dictionary<string, double>
+{
+    ["mass1"] = 0.200,
+    ["mass2"] = 0.150,
+    ["endTime"] = 2.0
+});
+SimulationFrame frame = session.GetFrame(0.5);
+var exportable = (IExportableSession)session;
+var experiment = new Experiment(exportable.ExperimentName, exportable.Request, exportable.Result);
+ExperimentFile.Save("experiment.json", experiment);
+```
+
+Нужны пространства имён `System.Collections.Generic`,
+`OberbekRotation.Core.Presentation` и `OberbekRotation.Export`.
+Отсутствующие параметры получают значения по умолчанию; `Start(null)` использует
+все значения по умолчанию. Запуск выполняется синхронно. Для долгих расчётов
+ViewModel должен организовать выполнение вне потока интерфейса.
+
+Порядок `frame.Poses` совпадает с `session.Scene.Elements`, а `frame.Values`
+с `session.Outputs`: время, угловая скорость, угол, путь груза, скорость груза,
+момент силы и угловое ускорение. Физические величины заданы в SI; положения
+фигур заданы в условных единицах сцены, поворот фигур в градусах против часовой
+стрелки. Между отсчётами используется линейная интерполяция.
+
+Показ заканчивается при достижении грузом границы сцены или конца расчёта.
+`Duration` может быть меньше заданного `endTime`; это ограничение анимации,
+а не изменение физической модели. `IExportableSession.Result` сохраняет весь
+расчёт до `endTime`. Конечное время кадра обрезается до диапазона
+`[0, Duration]`, а NaN и бесконечность отклоняются.
+
 ## Сборка, проверка и подключение
 
 Из корня репозитория с установленным .NET 8 SDK:
