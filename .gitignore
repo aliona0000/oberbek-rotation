@@ -19,3 +19,14 @@
 *.VC.db 
 .vs/ 
 .idea/
+
+# Hand-written .NET libraries and tests (Unity-generated projects stay ignored).
+!Core/Core.csproj
+!Export/Export.csproj
+!Tests/**/*.csproj
+!Examples/**/*.csproj
+!OberbekRotation.sln
+**/bin/
+**/obj/
+artifacts/
+TestResults/
