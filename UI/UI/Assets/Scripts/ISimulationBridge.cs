@@ -1,6 +1,7 @@
 // Assets/Scripts/ISimulationBridge.cs
 using System.Collections.Generic;
 
+// Удалить.
 public class ParameterDescriptor
 {
     public string Id;

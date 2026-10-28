@@ -46,11 +46,26 @@ public class ViewModel : MonoBehaviour
     }
 
     /// <summary>
+    /// Проверка введённых значений по правилам модели без расчёта (диапазоны, связи между параметрами).
+    /// Пустой список - можно запускать.
+    /// </summary>
+    public List<IssueData> Validate(Dictionary<string, double> values)
+    {
+        var list = new List<IssueData>();
+        foreach (var i in _model.Validate(values))
+            list.Add(new IssueData { ParameterId = i.ParameterId, Message = i.Message });
+        return list;
+    }
+
+    /// <summary>
     /// Вызывается, когда пользователь нажал «Запустить». values - словарь id → введённое значение.
     /// При успехе отдаёт описание сцены и длительность показа в секундах; при ошибке - текст.
     /// </summary>
     public bool TryRun(Dictionary<string, double> values, out SceneData scene, out double duration, out string error)
     {
+        foreach(var kv in values)
+        Debug.Log($"[ViewModel] Получен параметр: {kv.Key} = {kv.Value}");
+
         scene = null;
         duration = 0.0;
         error = null;

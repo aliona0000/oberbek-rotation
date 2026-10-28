@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Удалить.
 public class StubSimulationBridge : ISimulationBridge
 {
     private readonly Dictionary<string, double> _params = new Dictionary<string, double>();
