@@ -50,3 +50,10 @@ public sealed class OutputData
     public string DisplayName;
     public string Unit;
 }
+
+/// <summary>Замечание к введённому значению. ParameterId - к какому полю относится (может быть пустым).</summary>
+public sealed class IssueData
+{
+    public string ParameterId;
+    public string Message;
+}
