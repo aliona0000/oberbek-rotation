@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.View
 {
@@ -22,17 +22,33 @@ namespace Assets.Scripts.View
         public FramePlayer player;
         public TMP_Text statusText;   // строка для сообщений об ошибках / завершении
 
+        [Header("Проверка ввода")]
+        [Tooltip("Необязательно: кнопка 'Запустить' блокируется, пока в полях есть ошибки")]
+        public Button runButton;
+        [Tooltip("Необязательно: кнопка 'Сброс' блокируется, пока в полях есть ошибки")]
+        public Button resetButton;
+        [Tooltip("Цвет подсветки поля с ошибкой")]
+        public Color invalidColor = new Color(1f, 0.65f, 0.65f, 1f);
+
         private readonly Dictionary<string, TMP_InputField> _inputs = new Dictionary<string, TMP_InputField>();
+        private readonly Dictionary<string, Color> _normalColors = new Dictionary<string, Color>();
         private readonly List<TMP_Text> _outputTexts = new List<TMP_Text>();   // порядок = FrameData.Values
+
+        private InputValidator _validator;
 
         void Start()
         {
+            List<global::ParameterDescriptor> parameters = viewModel.GetDefaultParameters();
+            _validator = new InputValidator(parameters);
+
             BuildInputs(viewModel.GetDefaultParameters());
             BuildOutputs(viewModel.GetOutputs());
             EnsureViews();
 
             // показать установку в начальном положении (без запуска)
-            Prepare(false);
+            Dictionary<string, double> values;
+            if (CheckInputs(out values))
+                Prepare(false, values);
         }
 
         private void OnDestroy()
@@ -59,7 +75,13 @@ namespace Assets.Scripts.View
                 if (label != null)
                     label.text = p.DisplayName + ", " + p.Unit;
 
-                _inputs[string.IsNullOrEmpty(p.Id) ? p.DisplayName : p.Id] = input;
+                string key = InputValidator.KeyOf(p);
+                _inputs[key] = input;
+                if (input.targetGraphic != null)
+                    _normalColors[key] = input.targetGraphic.color;
+
+                // проверка при каждом изменении текста (подписываемся после установки значения по умолчанию)
+                input.onValueChanged.AddListener(OnInputChanged);
             }
         }
 
@@ -124,7 +146,9 @@ namespace Assets.Scripts.View
         /// <summary>Необязательно: кнопка "Сброс" - вернуть в начальное положение.</summary>
         public void OnReset()
         {
-            if (player != null) player.Restart(false);
+            Dictionary<string, double> values;
+            if (!CheckInputs(out values)) return;
+            Prepare(false, values);
         }
 
         private void Prepare(bool play)
@@ -142,6 +166,77 @@ namespace Assets.Scripts.View
             sceneView.Build(scene);
             player.Load(duration, viewModel.GetFrame, viewModel.FinishMessage);
             if (play) player.Play();
+        }
+
+        private void Prepare(bool play, Dictionary<string, double> values)
+        {
+            SceneData scene;
+            double duration;
+            string error;
+            if (!viewModel.TryRun(values, out scene, out duration, out error))
+            {
+                SetStatus("Error: " + error);
+                return;
+            }
+
+            SetStatus("");
+            sceneView.Build(scene);
+            player.Load(duration, viewModel.GetFrame, viewModel.FinishMessage);
+            if (play) player.Play();
+        }
+        private void OnInputChanged(string _)
+        {
+            Dictionary<string, double> values;
+            CheckInputs(out values);
+        }
+
+        /// <summary>
+        /// Двухступенчатая проверка. 1) формат и диапазоны по описаниям параметров (InputValidator);
+        /// 2) правила модели (ViewModel.Validate) - только если шаг 1 пройден.
+        /// Подсвечивает неверные поля, выводит сообщения и блокирует кнопки.
+        /// </summary>
+        private bool CheckInputs(out Dictionary<string, double> values)
+        {
+            List<IssueData> issues;
+            _validator.Validate(GetText, out values, out issues);
+
+            if (issues.Count == 0)
+                issues = viewModel.Validate(values);
+
+            ShowIssues(issues);
+            return issues.Count == 0;
+        }
+
+        private string GetText(string key)
+        {
+            TMP_InputField input;
+            return _inputs.TryGetValue(key, out input) ? input.text : null;
+        }
+
+        private void ShowIssues(List<IssueData> issues)
+        {
+            var bad = new HashSet<string>();
+            var lines = new List<string>();
+            foreach (var i in issues)
+            {
+                if (!string.IsNullOrEmpty(i.ParameterId)) bad.Add(i.ParameterId);
+                lines.Add(i.Message);
+            }
+
+            foreach (var kv in _inputs)
+            {
+                Graphic g = kv.Value.targetGraphic;
+                if (g == null) continue;
+                Color normal;
+                if (!_normalColors.TryGetValue(kv.Key, out normal)) normal = Color.white;
+                g.color = bad.Contains(kv.Key) ? invalidColor : normal;
+            }
+
+            bool ok = issues.Count == 0;
+            if (runButton != null) runButton.interactable = ok;
+            if (resetButton != null) resetButton.interactable = ok;
+
+            SetStatus(ok ? "" : string.Join("\n", lines));
         }
 
         private Dictionary<string, double> ReadInputs()
