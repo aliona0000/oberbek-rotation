@@ -817,6 +817,7 @@ GameObject:
   - component: {fileID: 510675884}
   - component: {fileID: 510675890}
   - component: {fileID: 510675889}
+  - component: {fileID: 510675891}
   m_Layer: 0
   m_Name: UICreator
   m_TagString: Untagged
@@ -856,9 +857,10 @@ MonoBehaviour:
   player: {fileID: 510675889}
   statusText: {fileID: 0}
   inputPath: {fileID: 1659622852}
-  runButton: {fileID: 0}
-  resetButton: {fileID: 0}
+  runButton: {fileID: 2102073196}
+  resetButton: {fileID: 1666432249}
   invalidColor: {r: 1, g: 0.65, b: 0.65, a: 1}
+  graphPrefab: {fileID: 155379517117418336, guid: 56b0e1fa0dee45240b3ffa083476f512, type: 3}
 --- !u!4 &510675886
 Transform:
   m_ObjectHideFlags: 0
@@ -886,7 +888,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bf3437daf2623644b160c5d06176720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  view: {fileID: 0}
+  view: {fileID: 510675890}
   playbackSpeed: 1
 --- !u!114 &510675890
 MonoBehaviour:
@@ -903,6 +905,18 @@ MonoBehaviour:
   controlCamera: 1
   margin: 0.3
   cameraOffset: {x: 0, y: 0}
+--- !u!114 &510675891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510675883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b4ef69e4853fa740911bd919e8b6cde, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2377,7 +2391,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 913606093}
   m_HandleRect: {fileID: 913606092}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3027,7 +3041,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1549066159}
   m_HandleRect: {fileID: 1549066158}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
