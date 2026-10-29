@@ -37,6 +37,30 @@ namespace Assets.Scripts.View
 
         private InputValidator _validator;
 
+        [Header("График")]
+        public GameObject graphPrefab; // Сюда перетащи префаб
+        private GraphPlotter _graphView;
+
+        void BuildGraph()
+        {
+            if (graphPrefab == null) return;
+
+            // 1. Создаем префаб в том же контейнере, где и поля ввода
+            GameObject go = Instantiate(graphPrefab, contentArea);
+            go.name = "GraphView";
+
+            // 2. Ищем компоненты внутри префаба
+            RawImage rawImg = go.GetComponentInChildren<RawImage>();
+            TMP_Text titleTxt = go.GetComponentInChildren<TMP_Text>(); // Или ищем по имени "Title"
+
+            // 3. Добавляем или берем компонент GraphView
+            _graphView = go.GetComponent<GraphPlotter>();
+            if (_graphView == null) _graphView = go.AddComponent<GraphPlotter>();
+
+            // 4. Настраиваем
+            _graphView.Setup(rawImg, titleTxt, "Угловая скорость w(t), рад/с");
+        }
+
         void Start()
         {
             List<global::ParameterDescriptor> parameters = viewModel.GetDefaultParameters();
@@ -44,6 +68,7 @@ namespace Assets.Scripts.View
 
             BuildInputs(viewModel.GetDefaultParameters());
             BuildOutputs(viewModel.GetOutputs());
+            BuildGraph();
             EnsureViews();
 
             // показать установку в начальном положении (без запуска)
@@ -190,6 +215,10 @@ namespace Assets.Scripts.View
             sceneView.Build(scene);
             player.Load(duration, viewModel.GetFrame, viewModel.FinishMessage);
             if (play) player.Play();
+
+            _plotTimes.Clear();
+            _plotValues.Clear();
+            if (_graphView != null) _graphView.Clear();
         }
         private void OnInputChanged(string _)
         {
@@ -259,14 +288,25 @@ namespace Assets.Scripts.View
             }
             return values;
         }
+        private List<double> _plotTimes = new List<double>();
+        private List<double> _plotValues = new List<double>();
 
         private void OnFrame(FrameData frame)
         {
+            // Твой старый код обновления текста...
             int count = Mathf.Min(_outputTexts.Count, frame.Values.Length);
             for (int i = 0; i < count; i++)
             {
                 if (_outputTexts[i] != null)
                     _outputTexts[i].text = frame.Values[i].ToString("F3", CultureInfo.InvariantCulture);
+            }
+
+            // Код графика:
+            if (_graphView != null && frame.Values.Length > 1)
+            {
+                _plotTimes.Add(frame.Time);
+                _plotValues.Add(frame.Values[1]); // Индекс 1 - это omega (проверь по Core)
+                _graphView.Plot(_plotTimes.ToArray(), _plotValues.ToArray());
             }
         }
 
