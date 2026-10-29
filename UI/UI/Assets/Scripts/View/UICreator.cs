@@ -21,6 +21,7 @@ namespace Assets.Scripts.View
         public SceneView sceneView;
         public FramePlayer player;
         public TMP_Text statusText;   // строка для сообщений об ошибках / завершении
+        public TMP_InputField inputPath;
 
         [Header("Проверка ввода")]
         [Tooltip("Необязательно: кнопка 'Запустить' блокируется, пока в полях есть ошибки")]
@@ -149,6 +150,12 @@ namespace Assets.Scripts.View
             Dictionary<string, double> values;
             if (!CheckInputs(out values)) return;
             Prepare(false, values);
+        }
+
+        public void OnExport()
+        {
+            string path = inputPath.text;
+            viewModel.SaveExperiment(path);
         }
 
         private void Prepare(bool play)
