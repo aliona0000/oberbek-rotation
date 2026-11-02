@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AssemblyName>OberbekRotation.Core</AssemblyName>
+    <RootNamespace>OberbekRotation.Core</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <PackageId>OberbekRotation.Core</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Oberbek Rotation contributors</Authors>
+    <Description>Independent SI-unit physics model of an Oberbeck pendulum.</Description>
+    <RepositoryUrl>https://github.com/aliona0000/oberbek-rotation</RepositoryUrl>
+    <PackageReadmeFile>CORE-EXPORT.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../docs/CORE-EXPORT.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+</Project>
